@@ -22,24 +22,18 @@ public:
     }
     Integer operator^(uint64_t pow) const
     {
-        switch (pow)
+        Integer result(1);
+        Integer x = *this;
+        while (pow)
         {
-        case 0:
-            return 1;
-        case 1:
-            return *this;
-        case 2:
-            return *this * *this;
-        default:
-            if (pow % 2 == 0)
+            if (pow % 2 != 0)
             {
-                return (*this ^ (pow / 2)) ^ 2;
+                result = result * x;
             }
-            else
-            {
-                return ((*this ^ (pow / 2)) ^ 2) * *this;
-            }
+            x = x * x;
+            pow /= 2;
         }
+        return result;
     }
     Integer operator/(const Integer &other) const
     {
